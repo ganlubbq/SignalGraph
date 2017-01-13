@@ -44,7 +44,7 @@ function grad = GetGradUtt(X,Y,phi_s, phi_n, weight, lambda, future_grad, future
 [D,C,T,N] = size(X);
 u = zeros(C,1);
 u(1) = 1;
-future_grad2 = reshape(future_grad2, 257,5);
+future_grad2 = reshape(future_grad2, 257,C);
 grad_phi_s = zeros(C,C,D);
 grad_phi_n = zeros(C,C,D);
 
