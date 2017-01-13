@@ -62,7 +62,7 @@ for f=1:D
 %         grad_phi_n(:,:,f) = - 2* phi_n_inv * dyxx * ww + 2 * dyyy * phi_n_inv * phi_s{1,1,f} * phi_n_inv / lambda{1,1,f};
         
             for ii = 1:C
-                grad_phi_s(:,:,f) = grad_phi_s(:,:,f) + conj(future_grad2(f,ii)) *  phi_n_inv(ii,:)' * u' /lambda{1,1,f};
+                grad_phi_s(:,:,f) = grad_phi_s(:,:,f) + future_grad2(f,ii) *  phi_n_inv(ii,:).' * u' /lambda{1,1,f};
             end
         
             for ii = 1:C
@@ -72,7 +72,7 @@ for f=1:D
             end
 
             for ii = 1:C
-                grad_phi_s(:,:,f) = grad_phi_s(:,:,f) - conj(future_grad2(f,ii)) * conj(weight(f,ii)) * phi_n_inv'/lambda{1,1,f};
+                grad_phi_s(:,:,f) = grad_phi_s(:,:,f) - future_grad2(f,ii) * weight(f,ii) * phi_n_inv/lambda{1,1,f};
                 grad_phi_n(:,:,f) = grad_phi_n(:,:,f) + conj(future_grad2(f,ii)) * conj(weight(f,ii)) * (phi_n_inv * phi_s{1,1,f} * phi_n_inv)' / lambda{1,1,f};
             end
             
