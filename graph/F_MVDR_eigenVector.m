@@ -18,12 +18,15 @@ nCh = sqrt(dimTmp);
 
 speechCov = reshape(speechCov, nCh, nCh, nFreqBin, T, N);
 noiseCov = reshape(noiseCov, nCh, nCh, nFreqBin, T, N);
+loading = 1e-3 * eye(nCh);
+loading = repmat(loading, [1 1 size(noiseCov, 3)]);
 
 speechCov_cell = num2cell(speechCov, [1 2]);       % convert to cell array and call cellfun for speed
 noiseCov_cell = num2cell(noiseCov, [1 2]); 
-
+loading_cell = num2cell(loading, [1, 2]);
 [u, v] = cellfun(@(x) eig(x), speechCov_cell, 'UniformOutput', 0);
-weight = cellfun(@(x, n) inv(n)*x(:, end)/(x(:, end)'*inv(n)*x(:, end)), u, noiseCov_cell, 'UniformOutput', 0);
+
+weight = cellfun(@(x, n, d) inv(n+d)*x(:, end)/(x(:, end)'*inv(n+d)*x(:, end)), u, noiseCov_cell, loading_cell, 'UniformOutput', 0);
 U = cell2mat(u);
 V = cell2mat(v);
 

@@ -402,6 +402,12 @@ for i=nLayer:-1:1
             power_layer = layer{i+beamform_layer.next+layer{i}.next};
             after_power_layer = layer{i+beamform_layer.next+layer{i}.next+power_layer.next};
             layer{i}.grad = B_MVDR_spatialCov(X, layer{i}, beamform_layer, after_power_layer);
+        case 'mvdr_eigenvector'
+            beamform_layer = layer{i+layer{i}.next};
+            [X] = prepareBeamforming(layer(i+layer{i}.next+beamform_layer.prev));
+            power_layer = layer{i+beamform_layer.next+layer{i}.next};
+            after_power_layer = layer{i+beamform_layer.next+layer{i}.next+power_layer.next};
+            layer{i}.grad = B_MVDR_eigenVector(X, layer{i}, beamform_layer, after_power_layer);
             
         % other non-updatable layers
         case 'relu'

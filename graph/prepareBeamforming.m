@@ -1,6 +1,6 @@
 function [input2, weight, input_layer] =  prepareBeamforming(input_layers)
 for i=1:length(input_layers)
-    if strcmpi(input_layers{i}.name, 'real_imag2BFweight') || strcmpi(input_layers{i}.name, 'MVDR_spatialCov')
+    if strcmpi(input_layers{i}.name, 'real_imag2BFweight') || strcmpi(input_layers{i}.name, 'MVDR_spatialCov') ||strcmpi(input_layers{i}.name, 'MVDR_eigenVector')
         N = length(input_layers{i}.freqBin);
         weight = input_layers{i}.a;
         if isfield(input_layers{i}, 'online')
